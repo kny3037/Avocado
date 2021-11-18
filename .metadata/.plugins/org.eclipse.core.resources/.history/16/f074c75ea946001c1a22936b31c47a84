@@ -1,0 +1,10 @@
+package com.homet.dao;
+
+import com.homet.model.Freeboard;
+
+public class FreeboardMapper {
+
+	int insert(Freeboard dto);
+	
+	
+}

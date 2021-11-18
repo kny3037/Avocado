@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title>자유게시판 글쓰기</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div>
+			<form name="write-form" action="/board/write" autocomplete="off" method="post">  
+				<div>
+					<input class="mt-4" type="text" id="title" maxlength='30' name="title" placeholder="제목을 입력하세요">
+					<br/>
+					<input type="text" id="writer" name="writer"  maxlength='10' value="" placeholder="작성자"> 
+					<br/>
+					<div id="content_div">
+					 <textarea class="form-control" style="height:100%; width:100%;" maxlength='1000' id="content" name = "content"></textarea>
+					 </div>
+					<br/>					
+					<input type="submit" id="submiBtn"  class="btn btn-outline-primary mr-2" value="작성">
+				</div>
+			</form>			
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+package com.homet.dao;
+
+import java.util.List;
+
+import com.homet.model.Freeboard;
+
+public interface FreeboardMapper {
+
+	int insert(Freeboard dto);
+	int update(Freeboard dto);
+	int delete(int fidx);
+	Freeboard getBoardOne (int fidx);
+	List<Freeboard>getAll();
+}
