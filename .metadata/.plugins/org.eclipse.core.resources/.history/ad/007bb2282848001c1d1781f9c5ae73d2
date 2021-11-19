@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title>자유게시판 글쓰기</title>
+</head>
+<body>
+
+	<form  action="/post" method="post">
+        
+        <input type="text" name="subject" placeholder="제목"> <br>
+        <input type="text" name="nickname" placeholder="작성자"> <br>
+        <textarea name="content" placeholder="내용을 입력하세요."></textarea><br>
+		<input type="text" name="hashtag" placeholder="태그 입력">
+		
+        <input type="submit" value="등록">
+        <button type="reset">취소</button>
+    </form>
+
+</body>
+</html>

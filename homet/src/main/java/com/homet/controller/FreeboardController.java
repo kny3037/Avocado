@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +39,7 @@ public class FreeboardController {
 		else currentPage = Integer.parseInt(page);
 		
 		PageDto pageDto;
-
+		
 		String findText = (String) param.get("findText");
 		String field=(String) param.get("field");
 		
@@ -46,8 +47,6 @@ public class FreeboardController {
 		pageDto=new PageDto(currentPage, pageSize, totalCount, field, findText);
 		list=service.searchList(pageDto); 
 		Map<String,Object> map = new HashMap<String,Object>();    
-		map.put("field",field);
-		map.put("findText",findText);
 		map.put("page", pageDto);		
 		map.put("list",list);	
 		model.addAllAttributes(map);	
@@ -58,9 +57,16 @@ public class FreeboardController {
 	
 	// 글 쓰기
 	@RequestMapping(value={"/","/write"})  
-	    public String write() {
+	    public String write(int page, Model model) {
 	        return "board/write";
 	    }
+	
+	//글 저장
+	@RequestMapping(value = "/save")
+		public String save(@ModelAttribute Freeboard freeboard) {
+		service.insert(freeboard);
+	return "redirect:list";
+}
 	
 	
 	

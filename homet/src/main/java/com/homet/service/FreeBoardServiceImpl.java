@@ -49,16 +49,16 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return dao.getCount();
 	}
 
+
 	@Override
 	public List<Freeboard> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public List<Freeboard> getPagelist(PageDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getPagelist(dto);
 	}
 
 	@Override
@@ -68,8 +68,10 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
 	@Override
 	public List<Freeboard> searchList(PageDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.searchList(dto);
 	}
+	
+	
+	
 
 }
