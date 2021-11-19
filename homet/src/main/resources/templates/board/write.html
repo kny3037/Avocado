@@ -8,17 +8,33 @@
 
 	<form action="/post" method="post">
         
-        <input type="text" id="subject" name="subject" placeholder="제목"> <br>
+        <div class="Subject">
+        	<input type="text" id="subject" name="subject" placeholder="제목"> <br>
+        </div>
         
-        <input type="text" id="nickname" name="nickname" placeholder="작성자"> <br>
+        <div class="Nickname">
+        	<input type="text" id="nickname" name="nickname" placeholder="작성자"> <br>
+        </div>
         
-        <textarea id="content" name="content" placeholder="내용을 입력하세요."></textarea><br>
+        <div class="Content">
+        	<textarea id="content" name="content" rows="15" cols="50"
+        	placeholder="작성하실 내용을 입력해주세요."></textarea><br>
+		</div>
 		
-		<input type="text" id="hashtag" name="hashtag" placeholder="태그 입력" >
-				
+		<div class="Hashtag">
+			<input type="text" id="hashtag" name="hashtag" placeholder="태그 입력" >
+		</div>
+			
+		<div class="File">
+			<input type="file" name="fileName" accept="image/*" multiple>	
+		</div>
 		
-        <button type="submit">등록</button>
-        <button type="reset">취소</button>
+		<div class="button">
+			<input type="submit" th:value="목록" th:formaction="@{/board/list}">
+        	<button type="submit">등록</button>
+        	<button type="reset">취소</button>
+    	</div>
+    	
     </form>
 
 </body>

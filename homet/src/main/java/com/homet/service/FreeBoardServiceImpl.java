@@ -71,6 +71,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return dao.searchList(dto);
 	}
 	
+
+	
+	
 	
 	
 

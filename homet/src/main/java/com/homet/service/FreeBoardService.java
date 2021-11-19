@@ -17,5 +17,6 @@ public interface FreeBoardService {
 	List<Freeboard> getPagelist(PageDto dto);
 	int searchCount(Map<String,Object> map);
 	List<Freeboard> searchList(PageDto dto);
+
 	
 }
