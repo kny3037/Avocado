@@ -4,15 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.homet.model.Freeboard;
@@ -20,16 +15,17 @@ import com.homet.model.PageDto;
 import com.homet.service.FreeBoardService;
 
 @Controller
-@RequestMapping("/board")
+//@RequestMapping("/board")
 public class FreeboardController {
-	private static final Logger logger = LoggerFactory.getLogger(FreeboardController.class);
 	 
-	@Autowired
-	FreeBoardService service;
+	private final FreeBoardService service;
 	
-	@RequestMapping(value={"/","/list"})    
+	public FreeboardController(FreeBoardService service) {
+		this.service = service;
+	}
+	
+	@RequestMapping(value="/list")    
 	public String pageList(@RequestParam Map<String, Object> param,Model model) {
-		logger.info("**freeboard list 출력합니다.");
 		
 		int currentPage;//현재 페이지
 		List<Freeboard> list;
@@ -55,18 +51,41 @@ public class FreeboardController {
 	
 	}
 	
-	// 글 쓰기
-	@RequestMapping(value={"/","/write"})  
+	//글 쓰기
+	@RequestMapping(value="/write")  
 	    public String write(int page, Model model) {
+			model.addAttribute("page", page);
 	        return "board/write";
 	    }
 	
 	//글 저장
 	@RequestMapping(value = "/save")
 		public String save(@ModelAttribute Freeboard freeboard) {
-		service.insert(freeboard);
-	return "redirect:list";
-}
+			service.insert(freeboard);
+			return "redirect:list";
+		}
+	
+	//글 상세보기
+	@RequestMapping("/detail")     
+		public String detail(int fidx, int page, Model model) {
+			model.addAttribute("detail", service.getBoardOne(fidx));
+			model.addAttribute("page",page);
+		return "board/detail";
+		}
+	
+	//글 수정
+	@RequestMapping("/update")
+		public String update(int fidx, int page, Model model) {
+			
+		return "board/update";
+	}
+	
+	//수정 -> 저장
+	
+	
+	
+	
+	//글 삭제
 	
 	
 	

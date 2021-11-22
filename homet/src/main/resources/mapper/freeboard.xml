@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.homet.dao.FreeboardMapper">
 
-	<insert id="insert" parameterType="Freeboard" useGeneratedKeys="true" keyProperty="idx">
+	<insert id="insert" parameterType="Freeboard" useGeneratedKeys="true" keyProperty="fidx">
 		insert into 
 			freeboard(subject,nickname,hashtag,content)
 		values

@@ -6,14 +6,14 @@
 </head>
 <body>
 
-	<form action="/post" method="post">
+	<form action="/save">
         
         <div class="Subject">
         	<input type="text" id="subject" name="subject" placeholder="제목"> <br>
         </div>
         
         <div class="Nickname">
-        	<input type="text" id="nickname" name="nickname" placeholder="작성자"> <br>
+        	<input type="text" id="nickname" name="nickname"  placeholder="작성자"> <br>
         </div>
         
         <div class="Content">
@@ -26,13 +26,13 @@
 		</div>
 			
 		<div class="File">
-			<input type="file" name="fileName" accept="image/*" multiple>	
+			<input type="file" name="fimage" accept="image/*" multiple>	
 		</div>
 		
 		<div class="button">
-			<input type="submit" th:value="목록" th:formaction="@{/board/list}">
         	<button type="submit">등록</button>
         	<button type="reset">취소</button>
+        	<a href="/list"><button type="button">목록</button></a>
     	</div>
     	
     </form>
