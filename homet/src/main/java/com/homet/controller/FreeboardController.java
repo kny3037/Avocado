@@ -91,7 +91,9 @@ public class FreeboardController {
 		model.addAttribute("fidx", fidx);
 		model.addAttribute("page", page);
 		
-		return "redirect:detail";
+		String url = "redirect:detail?&fidx="+fidx+"&page="+page;
+		return url;
+		/* return "redirect:detail"; */
 	}
 	
 	//글 삭제
