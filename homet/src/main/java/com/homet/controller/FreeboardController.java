@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.homet.model.Freeboard;
@@ -76,18 +77,31 @@ public class FreeboardController {
 	//글 수정
 	@RequestMapping("/update")
 		public String update(int fidx, int page, Model model) {
-			
+			model.addAttribute("", service.getBoardOne(fidx));
+			model.addAttribute("fidx", fidx);
+			model.addAttribute("page", page);
 		return "board/update";
 	}
 	
 	//수정 -> 저장
-	
-	
-	
+	@RequestMapping(value = "/updatesave", method = RequestMethod.POST)
+	public String updatesave(@ModelAttribute Freeboard freeboard, int fidx, int page, Model model ) {
+		service.update(freeboard);
+		
+		model.addAttribute("fidx", fidx);
+		model.addAttribute("page", page);
+		
+		return "redirect:detail";
+	}
 	
 	//글 삭제
-	
-	
+	@RequestMapping("/boarddelete")
+	public String boarddelete(int fidx, int page, Model model) {
+		service.delete(fidx);
+		
+		model.addAttribute("page", page);
+		return "redirect:list";
+	}
 	
 	
 	
