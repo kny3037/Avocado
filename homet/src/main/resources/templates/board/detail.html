@@ -10,15 +10,16 @@
         	<h2>[[${detail.subject}]]</h2>
         	<li>작성자 : [[${detail.nickname}]]</li>
         	
-        	<li>
-        		<ul>
-        			<li><pre>[[${detail.content}]]</pre></li>
-        		</ul>
-        	</li>
         
-        <li>태그 [[${detail.hashtag}]]</li>
+        	
+        	<li><pre>[[${detail.content}]]</pre></li>
+        	
+        	
         
-        작성날짜 : <td th:text="${#calendars.format(detail.reg_date,)}" type="both" /></time></p>
+        <p><li>태그 &nbsp [[${detail.hashtag}]]</li></p>   <!-- &nbsp : 공백 --> 
+        
+        작성날짜 : <td th:text="${#calendars.format(detail.reg_date,'yyyy-MM-dd')}"></td>
+
         
         </div>
         
