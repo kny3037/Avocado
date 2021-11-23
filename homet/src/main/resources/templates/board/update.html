@@ -2,9 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>자유게시판 수정</title>
 </head>
 <body>
 
+	<div>
+		<form th:action="@{/updatesave}" method="post">
+		
+		<div>
+			<input type="text" id="subject" name="subject" th:value="${detail.subject}">
+		</div>
+		
+		<div>
+			<input type="text" id="nickname"  name="nickname" th:value="${detail.nickname}" readonly>
+		</div>
+		
+		<div> 
+			<textarea id="content" name="content" >[[${detail.content}]]</textarea>  
+		</div>
+		
+		<div>
+			<input type="text" id="hashtag" name="hashtag" th:value="${detail.hashtag}">
+		</div>
+		
+		<input type="hidden" name="fidx" th:value="${fidx}">
+		<input type="hidden" name="page" th:value="${page}">
+					
+		<button type="submit">저장</button>
+		<button type="button" onclick="location.href='list'">돌아가기</button>
+
+		</form>	
+	</div>
 </body>
 </html>

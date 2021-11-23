@@ -77,13 +77,13 @@ public class FreeboardController {
 	//글 수정
 	@RequestMapping("/update")
 		public String update(int fidx, int page, Model model) {
-			model.addAttribute("", service.getBoardOne(fidx));
+			model.addAttribute("detail", service.getBoardOne(fidx));
 			model.addAttribute("fidx", fidx);
 			model.addAttribute("page", page);
 		return "board/update";
 	}
 	
-	//수정 -> 저장
+	//수정 후 저장
 	@RequestMapping(value = "/updatesave", method = RequestMethod.POST)
 	public String updatesave(@ModelAttribute Freeboard freeboard, int fidx, int page, Model model ) {
 		service.update(freeboard);
