@@ -1,6 +1,6 @@
 package com.homet.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +23,6 @@ public class Freeboard {
 	private String hashtag;
 	private String content;
 	private String fimage;
-	private Timestamp reg_date;
+	private Date reg_date;
 	private int like_cnt;
 }

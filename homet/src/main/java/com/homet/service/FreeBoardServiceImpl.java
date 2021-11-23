@@ -14,7 +14,6 @@ import com.homet.model.PageDto;
 
 @Service
 public class FreeBoardServiceImpl implements FreeBoardService {
-	private static final Logger logger = LoggerFactory.getLogger(FreeBoardServiceImpl.class);
 	
 	@Autowired
 	FreeboardMapper dao;
@@ -25,7 +24,6 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	
 	@Override
 	public int insert(Freeboard dto) {
-		logger.info("insert");
 		return dao.insert(dto);
 	}
 
@@ -51,9 +49,8 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
 
 	@Override
-	public List<Freeboard> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Freeboard> getAll() {	
+		return dao.getAll();
 	}
 	
 	@Override

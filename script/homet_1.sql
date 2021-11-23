@@ -66,9 +66,11 @@ create table freeboard(
 
 alter table users add addr varchar(50) not null;
 
--- users insert
-insert into users values (0,'admin','관리자','admin@naver.com','111111',99,'남',null,'서울시');
+select * from freeboard f ;
 
+
+-- users insert
+insert into users values (0,'admin','관리자','admin@naver.com',sha2('1111111',256),99,'남',null,'서울시');
 
 -- mealkit insert 
 insert into mealkit(name,price,image,category) values('닭가슴살 스테이크 오리지널 100g',   '1500',   '닭가슴살 스테이크 오리지널.jpg',   'meat');

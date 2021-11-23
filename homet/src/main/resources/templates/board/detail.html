@@ -5,6 +5,22 @@
 	<title>자유게시판 내용 상세보기</title>
 </head>
 <body>
+
+    <script type="text/javascript">
+ 	// 좋아요 기능
+    function likeOn(fidx)  {
+    	if (like == true) {
+    		document.getElementById("heart").src = "img/heart_r.png";
+    	} else {
+    		document.getElementById("heart").src = "img/heart.png";
+    	}
+
+    	location.href = 'detail?fidx=' + fidx;
+    }	
+    
+    </script>  
+      
+
       
         <div id="all">
         	<h2>[[${detail.subject}]]</h2>
@@ -12,8 +28,18 @@
         	      	
         	<li><pre>[[${detail.content}]]</pre></li>
         	
+        		<div>
+        			<th:if test="${like eq false}">
+        				<img src="img/heart_r.png" alt="light" style="width: 22px; cursor: pointer;" id="like" onclick="likeOn('${detail.fidx}','${like}')">
+        			</th:if>
+        			<th:if>
+        				<img src="img/heart.png" alt="light" style="width: 22px; cursor: pointer;" id="like" onclick="likeOn('${detail.fidx}','${like}')">
+        			</th:if>
+        		
+        		</div>
         	
-        
+  
+        	
         
         
         	<p><li>태그 &nbsp [[${detail.hashtag}]]</li></p>   <!-- &nbsp : 공백 --> 
