@@ -6,7 +6,7 @@
 </head>
 <body>
 
-	<form action="/save">
+	<form action="/save" enctype="multipart/form-data" method="post">
         
         <div class="Subject">
         	<input type="text" id="subject" name="subject" placeholder="제목"> <br>
@@ -26,7 +26,7 @@
 		</div>
 			
 		<div class="File">
-			<input type="file" name="fimage" accept="image/*" multiple>	
+			<input type="file" name="fimage" accept="image/*"/>	
 		</div>
 		
 		<div class="button">

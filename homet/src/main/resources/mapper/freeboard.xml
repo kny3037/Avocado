@@ -6,9 +6,9 @@
 
 	<insert id="insert" parameterType="Freeboard" useGeneratedKeys="true" keyProperty="fidx">
 		insert into 
-			freeboard(subject,nickname,hashtag,content)
+			freeboard(subject,nickname,hashtag,content,fimage)
 		values
-			(#{subject},#{nickname},#{hashtag},#{content})
+			(#{subject},#{nickname},#{hashtag},#{content},#{fimage})
 	</insert>
 
 	<update id="update" parameterType="Freeboard">

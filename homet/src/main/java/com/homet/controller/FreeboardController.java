@@ -1,8 +1,11 @@
 package com.homet.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.homet.model.Freeboard;
 import com.homet.model.PageDto;
@@ -59,13 +63,7 @@ public class FreeboardController {
 	        return "board/write";
 	    }
 	
-	//글 저장
-	@RequestMapping(value = "/save")
-		public String save(@ModelAttribute Freeboard freeboard) {
-			service.insert(freeboard);
-			return "redirect:list";
-		}
-	
+
 	//글 상세보기
 	@RequestMapping("/detail")     
 		public String detail(int fidx, int page, Model model) {
@@ -105,6 +103,29 @@ public class FreeboardController {
 		return "redirect:list";
 	}
 	
-	
-	
+	//글, 파일저장
+	@RequestMapping(value = "/save" ,method = RequestMethod.POST)
+	   public String insert(@RequestParam MultipartFile fimage, String subject, String nickname
+			   , String content, String hashtag) throws IllegalStateException, IOException {
+	      System.out.println(fimage.getOriginalFilename());
+	     String random_img = null;
+	     if(!fimage.isEmpty())
+	    random_img =UUID.randomUUID().toString()+fimage.getOriginalFilename();
+	    
+	     Freeboard freeboard = new Freeboard(0, subject, nickname,
+	    		  hashtag, content, random_img, null, 0);
+	      
+	      service.insert(freeboard);
+	      
+			
+			  String path ="C:\\freeboard\\img";
+			  File upfile = null; 
+			  if(random_img !=null){
+				  String img = path+"\\"+random_img;
+				  upfile = new File(img);
+				  fimage.transferTo(upfile); 
+				  }
+	 
+	      return "redirect:list";
+	}	
 }
