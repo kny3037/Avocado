@@ -7,23 +7,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.homet.model.Freeboard;
+import com.homet.model.Likes;
 import com.homet.model.PageDto;
 import com.homet.service.FreeBoardService;
+import com.homet.service.LikesService;
 
 @Controller
+@SessionAttributes(names = {"user"})
 //@RequestMapping("/board")
 public class FreeboardController {
-	 
+	
+	@Autowired
+	LikesService lservice;
+	
 	private final FreeBoardService service;
+	
+	
 	
 	public FreeboardController(FreeBoardService service) {
 		this.service = service;
@@ -67,8 +79,17 @@ public class FreeboardController {
 	//글 상세보기
 	@RequestMapping("/detail")     
 		public String detail(int fidx, int page, Model model) {
+			Freeboard board = null;
+			System.out.println(fidx);
 			model.addAttribute("detail", service.getBoardOne(fidx));
+			System.out.println(service.getBoardOne(fidx));
+			System.out.println(model);
 			model.addAttribute("page",page);
+			System.out.println(model);
+			board = service.getBoardOne(fidx);
+			lservice.selectByNickname(board.getNickname());
+			model.addAttribute("count", lservice.selectByNickname(board.getNickname()));
+			System.out.println(model);
 		return "board/detail";
 		}
 	
@@ -110,7 +131,7 @@ public class FreeboardController {
 	      System.out.println(fimage.getOriginalFilename());
 	     String random_img = null;
 	     if(!fimage.isEmpty())
-	    random_img =UUID.randomUUID().toString()+fimage.getOriginalFilename();
+	    random_img =UUID.randomUUID().toString()+fimage.getOriginalFilename();  
 	    
 	     Freeboard freeboard = new Freeboard(0, subject, nickname,
 	    		  hashtag, content, random_img, null, 0);
@@ -127,5 +148,24 @@ public class FreeboardController {
 				  }
 	 
 	      return "redirect:list";
+	}
+	 //좋아요
+	 @PostMapping("/like")
+	 @ResponseBody
+	 	public int like(@RequestParam("fidx") int fidx, @RequestParam("nickname") String nickname) {
+		 
+		 Likes like = Likes.builder().fidx(fidx).nickname(nickname).build();
+		 System.out.println(fidx);
+		 System.out.println(nickname);
+		 System.out.println(like);
+
+		 int count=0;
+		 
+		 lservice.insert(like);
+		 count = lservice.selectByFidx(fidx);
+		 System.out.println(count);
+		 return count;
+	 }
+	 		
 	}	
-}
+

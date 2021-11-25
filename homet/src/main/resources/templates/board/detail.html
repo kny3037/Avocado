@@ -3,57 +3,78 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>자유게시판 내용 상세보기</title>
-</head>
-<body>
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
 
-    <script type="text/javascript">
- 	// 좋아요 기능
-    function likeOn(fidx)  {
-    	if (like == true) {
-    		document.getElementById("heart").src = "img/heart_r.png";
-    	} else {
-    		document.getElementById("heart").src = "img/heart.png";
-    	}
+	 $(function(){
+         like();
+         
+      });
+	
+	function like(){
+	     var cnt = ""; 
+	    $('#like').on('click',function() {
+	    	var nickname = $(".nickname").val();
+	    	$.ajax({
+	               type : 'post',
+	               url : 'like',
+	               data : {
+	                  fidx:$(".fidx").val(),
+	                  nickname:nickname
+	                  },
+	                  success : function(count) {
+	                     cnt = count
+	                     console.log(cnt);
+	                  }
+	               });  
+	    });
+	 }
 
-    	location.href = 'detail?fidx=' + fidx;
-    }	
-    
-    </script>  
+	</script>
       
+</head>
+
+<body>
 
       
         <div id="all">
-        	<h2>[[${detail.subject}]]</h2>
-        	<li>작성자 : [[${detail.nickname}]]</li>
+        	<ul>
+        	<li><input class="fidx" type="hidden" name="fidx" th:value="${detail.fidx}"></li>
+        	<li><h2>[[${detail.subject}]]</h2></li>
+        	<li><input class="nickname" type=text name="nickname" th:value="${detail.nickname}" readonly></li>
         	      	
         	<li><pre>[[${detail.content}]]</pre></li>
         	
-        		<div>
-        			<th:if test="${like eq false}">
-        				<img src="img/heart_r.png" alt="light" style="width: 22px; cursor: pointer;" id="like" onclick="likeOn('${detail.fidx}','${like}')">
-        			</th:if>
-        			<th:if>
-        				<img src="img/heart.png" alt="light" style="width: 22px; cursor: pointer;" id="like" onclick="likeOn('${detail.fidx}','${like}')">
-        			</th:if>
-        		
-        		</div>
-        	
-  
-        	
+        	<li><img th:src="@{/img/}+${detail.fimage}" alt="image"></li>
         
+        	<li>태그 &nbsp [[${detail.hashtag}]]</li>   <!-- &nbsp : 공백 --> 
         
-        	<p><li>태그 &nbsp [[${detail.hashtag}]]</li></p>   <!-- &nbsp : 공백 --> 
-        
-        	작성날짜 : <td th:text="${#calendars.format(detail.reg_date,'yyyy-MM-dd')}"></td>
-
-        
+        	<li> 작성날짜 : <span th:text="${#calendars.format(detail.reg_date,'yyyy-MM-dd')}"></span></li>
+        </ul>
         </div>
         
-		<a th:href="@{/update?(fidx=${detail.fidx},page=${page})}"><button type="button">수정</button></a>
-		<a th:href="@{/boarddelete?(fidx=${detail.fidx},page=${page})}"><button type="button">삭제</button></a>
+        <div class="container" style="float: right;">
+			
+			<th:if test="${detail.getCount().toString().equals('0')}">	
+				<a type="button" id="like"><img src="resources/img/like_emt.png" ></a> <!-- 좋아요 누르기 전 이미지 -->
+				</th:if>
+			<th:if test="${detail.getCount().toString().equals('1')}">
+				<a type="button" id="like"><img src="resources/img/like_full.png" ></a> <!-- 좋아요 누른 후 이미지 -->
+				</th:if>
+		</div>
+        
+        
+        
+        <th:if test="${}">  <!-- 글 작성자만 수정삭제 보이도록 -->  
+			<a th:href="@{/update?(fidx=${detail.fidx},page=${page})}"><button type="button">수정</button></a>
+			<a th:href="@{/boarddelete?(fidx=${detail.fidx},page=${page})}"><button type="button">삭제</button></a>
+		</th:if>
 		
 		<a href="/list"><button type="button">목록</button></a>
       
+
+
 
       
 </body>
