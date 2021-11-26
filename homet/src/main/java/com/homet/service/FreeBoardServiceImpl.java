@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.homet.dao.FreeboardMapper;
 import com.homet.model.Freeboard;
-import com.homet.model.PageDto;
+import com.homet.model.Fpagdto;
 
 @Service
 public class FreeBoardServiceImpl implements FreeBoardService {
@@ -54,7 +54,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	}
 	
 	@Override
-	public List<Freeboard> getPagelist(PageDto dto) {
+	public List<Freeboard> getPagelist(Fpagdto dto) {
 		return dao.getPagelist(dto);
 	}
 
@@ -64,8 +64,14 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	}
 
 	@Override
-	public List<Freeboard> searchList(PageDto dto) {
+	public List<Freeboard> searchList(Fpagdto dto) {
 		return dao.searchList(dto);
+	}
+
+	@Override
+	public int like_cnt(int fidx) {
+		// TODO Auto-generated method stub
+		return dao.like_cnt(fidx);
 	}
 	
 

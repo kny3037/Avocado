@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.homet.model.Freeboard;
 import com.homet.model.Likes;
-import com.homet.model.PageDto;
+import com.homet.model.User;
+import com.homet.model.Fpagdto;
 import com.homet.service.FreeBoardService;
 import com.homet.service.LikesService;
 
@@ -51,13 +55,13 @@ public class FreeboardController {
 		if(page==null || page.trim().length()==0) currentPage = 1;
 		else currentPage = Integer.parseInt(page);
 		
-		PageDto pageDto;
+		Fpagdto pageDto;
 		
 		String findText = (String) param.get("findText");
 		String field=(String) param.get("field");
 		
 		totalCount=service.searchCount(param);  
-		pageDto=new PageDto(currentPage, pageSize, totalCount, field, findText);
+		pageDto=new Fpagdto(currentPage, pageSize, totalCount, field, findText);
 		list=service.searchList(pageDto); 
 		Map<String,Object> map = new HashMap<String,Object>();    
 		map.put("page", pageDto);		
@@ -78,8 +82,10 @@ public class FreeboardController {
 
 	//글 상세보기
 	@RequestMapping("/detail")     
-		public String detail(int fidx, int page, Model model) {
+		public String detail(int fidx, int page, Model model, @SessionAttribute("user")User user) {
 			Freeboard board = null;
+			user.getNickname();
+			service.like_cnt(fidx);
 			System.out.println(fidx);
 			model.addAttribute("detail", service.getBoardOne(fidx));
 			System.out.println(service.getBoardOne(fidx));
@@ -87,8 +93,7 @@ public class FreeboardController {
 			model.addAttribute("page",page);
 			System.out.println(model);
 			board = service.getBoardOne(fidx);
-			lservice.selectByNickname(board.getNickname());
-			model.addAttribute("count", lservice.selectByNickname(board.getNickname()));
+			model.addAttribute("count", lservice.selectByNicknameFidx(Likes.builder().fidx(fidx).nickname(user.getNickname()).build()));
 			System.out.println(model);
 		return "board/detail";
 		}
@@ -152,7 +157,7 @@ public class FreeboardController {
 	 //좋아요
 	 @PostMapping("/like")
 	 @ResponseBody
-	 	public int like(@RequestParam("fidx") int fidx, @RequestParam("nickname") String nickname) {
+	 	public int like(@RequestParam("fidx") int fidx, @RequestParam("nickname") String nickname, @SessionAttribute("user")User user) {
 		 
 		 Likes like = Likes.builder().fidx(fidx).nickname(nickname).build();
 		 System.out.println(fidx);
@@ -161,11 +166,27 @@ public class FreeboardController {
 
 		 int count=0;
 		 
-		 lservice.insert(like);
-		 count = lservice.selectByFidx(fidx);
-		 System.out.println(count);
+		 lservice.insert(Likes.builder().fidx(fidx).nickname(user.getNickname()).build());
 		 return count;
 	 }
 	 		
+	//좋아요삭제
+		 @PostMapping("/like2")
+		 @ResponseBody
+		 	public int like2(@RequestParam("fidx") int fidx, @RequestParam("nickname") String nickname, @SessionAttribute("user")User user) {
+			 
+			 Likes like = Likes.builder().fidx(fidx).nickname(nickname).build();
+			 System.out.println(fidx);
+			 System.out.println(nickname);
+			 System.out.println(like);
+
+			 int count=0;
+			 
+			 lservice.delete(Likes.builder().fidx(fidx).nickname(user.getNickname()).build());
+			 
+			 System.out.println(count);
+			 return count;
+		 }
+	 
 	}	
 

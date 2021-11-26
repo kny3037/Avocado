@@ -13,15 +13,19 @@
 	</select>
 	
 	<select id="selectByFidx" resultType="int" parameterType="int">
-		select * from likes where fidx =#{fidx}
+		select count(*) from likes where fidx =#{fidx}
 	</select>	
+	
+	<select id="selectByNicknameFidx" resultType="int" parameterType="likes">
+		select count(*) from likes where nickname =#{nickname} and fidx =#{fidx}
+	</select>
 	
 	<insert id="insert" parameterType="likes" useGeneratedKeys="true" keyProperty="lidx"> <!-- 유저가 좋아요한 목록 좋아요 테이블에 삽입 -->
 		insert into likes(nickname,fidx) values(#{nickname},#{fidx})
 	</insert>	
 	
 	<delete id="delete" parameterType="likes"> <!-- 유저가 좋아요 취소한 목록 좋아요 테이블에서 삭제-->
-		delete from likes where lidx = #{fidx}
+		delete from likes where nickname=#{nickname} and fidx=#{fidx}
 	</delete>
 	
 	

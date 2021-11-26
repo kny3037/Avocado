@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.homet.dao.LikesMapper;
 import com.homet.model.Likes;
-import com.homet.model.PageDto;
+import com.homet.model.Fpagdto;
 
 @Service
 public class LikesServiceImpl implements LikesService{
@@ -21,12 +21,7 @@ public class LikesServiceImpl implements LikesService{
 	}
 
 	@Override
-	public int delete(int lidx) {
-		return dao.delete(lidx);
-	}
-
-	@Override
-	public List<Likes> getList(PageDto dto) {
+	public List<Likes> getList(Fpagdto dto) {
 		// TODO Auto-generated method stub
 		return dao.getList(dto);
 	}
@@ -43,6 +38,22 @@ public class LikesServiceImpl implements LikesService{
 		return dao.selectByNickname(nickname);
 	}
 
+	@Override
+	public int delete(Likes dto) {
+		// TODO Auto-generated method stub
+		return dao.delete(dto);
+	}
+
+	@Override
+	public int selectByNicknameFidx(Likes dto) {
+		// TODO Auto-generated method stub
+		return dao.selectByNicknameFidx(dto);
+	}
+
+
+
+
+	
 	
 	
 	

@@ -3,17 +3,20 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>자유게시판 내용 상세보기</title>
+	<link rel="stylesheet" href="/resources/css/header.css">
+	<link rel="stylesheet" href="/resources/css/boardDetail.css">
 	
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript">
 
 	 $(function(){
          like();
-         
+         like2();
       });
 	
 	function like(){
 	     var cnt = ""; 
+	     var link = document.location.href;
 	    $('#like').on('click',function() {
 	    	var nickname = $(".nickname").val();
 	    	$.ajax({
@@ -26,22 +29,67 @@
 	                  success : function(count) {
 	                     cnt = count
 	                     console.log(cnt);
+	                     location.href= link;
 	                  }
+	                  
 	               });  
 	    });
+	   
+	        
 	 }
 
+	function like2(){
+	     var cnt = ""; 
+	     var link = document.location.href;
+	    $('#like2').on('click',function() {
+	    	var nickname = $(".nickname").val();
+	    	$.ajax({
+	               type : 'post',
+	               url : 'like2',
+	               data : {
+	                  fidx:$(".fidx").val(),
+	                  nickname:nickname
+	                  },
+	                  success : function(count) {
+	                     cnt = count
+	                     console.log(cnt);
+	                     location.href= link;
+	                  }
+	                  
+	               });  
+	    });
+	   
+	        
+	 }
+	
 	</script>
       
 </head>
 
 <body>
 
+	<div th:fragment="menu" th:replace="include/header :: menu"></div>
       
         <div id="all">
+        
+         	<div class="container" style="float: right;">
+			
+			<th:block th:if="${count==0}">
+				<a type="button" class="button" id="like"><img src="resources/img/like_emt.png" ></a>			
+			</th:block>
+			<th:block th:if="${count==1}">
+				<a type="button" class="button2" id="like2"><img src="resources/img/like_full.png" ></a>
+			</th:block>
+			</div>
+        
+        	
+        
         	<ul>
         	<li><input class="fidx" type="hidden" name="fidx" th:value="${detail.fidx}"></li>
+        	
         	<li><h2>[[${detail.subject}]]</h2></li>
+        	<li>[[${detail.like_cnt}]]</li>
+        	
         	<li><input class="nickname" type=text name="nickname" th:value="${detail.nickname}" readonly></li>
         	      	
         	<li><pre>[[${detail.content}]]</pre></li>
@@ -52,17 +100,6 @@
         
         	<li> 작성날짜 : <span th:text="${#calendars.format(detail.reg_date,'yyyy-MM-dd')}"></span></li>
         </ul>
-        </div>
-        
-        <div class="container" style="float: right;">
-			
-			<th:if test="${detail.getCount().toString().equals('0')}">	
-				<a type="button" id="like"><img src="resources/img/like_emt.png" ></a> <!-- 좋아요 누르기 전 이미지 -->
-				</th:if>
-			<th:if test="${detail.getCount().toString().equals('1')}">
-				<a type="button" id="like"><img src="resources/img/like_full.png" ></a> <!-- 좋아요 누른 후 이미지 -->
-				</th:if>
-		</div>
         
         
         
@@ -73,7 +110,7 @@
 		
 		<a href="/list"><button type="button">목록</button></a>
       
-
+</div>
 
 
       

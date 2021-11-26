@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.homet.model.Freeboard;
-import com.homet.model.PageDto;
+import com.homet.model.Fpagdto;
 
 @Mapper
 public interface FreeboardMapper {
@@ -17,7 +17,8 @@ public interface FreeboardMapper {
 	Freeboard getBoardOne (int fidx);           //한 개 검색
 	int getCount();	                            //전체 글 개수
 	List<Freeboard>getAll();                    //전체 게시글
-	List<Freeboard> getPagelist(PageDto dto);   //한 페이지 게시글
+	List<Freeboard> getPagelist(Fpagdto dto);   //한 페이지 게시글
 	int searchCount(Map<String,Object> map);	//검색 카운트
-	List<Freeboard> searchList(PageDto dto);	//검색 게시글
+	List<Freeboard> searchList(Fpagdto dto);	//검색 게시글
+	int like_cnt(int fidx);
 }

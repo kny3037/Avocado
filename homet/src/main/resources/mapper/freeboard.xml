@@ -69,5 +69,10 @@
 				   where hashtag like concat('%', #{findText},'%')
 				  </if>           
 	</select>
+	
+	<update id="like_cnt" parameterType="int">
+		update freeboard set like_cnt=(select count(*) from 
+		likes where fidx=#{fidx}) where fidx=#{fidx};
+	</update>
 
 </mapper>
