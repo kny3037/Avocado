@@ -4,16 +4,27 @@
 	<meta charset="UTF-8">
 	<title>자유게시판 글쓰기</title>
 </head>
+
+<script type="text/javascript">
+	function setThumbnail(event) {
+	   var reader = new FileReader(); 
+	   reader.onload = function(event) { 
+	   var img = document.createElement("img"); 
+	   img.setAttribute("src", event.target.result); 
+	   document.querySelector("div#image_container").appendChild(img); }; 
+	   reader.readAsDataURL(event.target.files[0]); }   
+	   
+</script>
 <body>
 
-	<form action="/save" enctype="multipart/form-data" method="post">
+	<form action="/save" enctype="multipart/form-data" method="post">  <!-- enctype="multipart/form-data" method="post" -->
         
         <div class="Subject">
         	<input type="text" id="subject" name="subject" placeholder="제목"> <br>
         </div>
         
         <div class="Nickname">
-        	<input type="text" id="nickname" name="nickname" placeholder="작성자" > <br>   <!--  readonly value="${sessionScope.user.nickname}" -->
+        	<input type="text" id="nickname" name="nickname" th:value="${user.nickname}" > <br>  
         </div>
         
         <div class="Content">
@@ -26,7 +37,9 @@
 		</div>
 			
 		<div class="File">
-			<input type="file" name="fimage" accept="image/*"/>	
+			 <input type="file" name="fimage" accept="image/*" 
+               onchange="setThumbnail(event);">
+               <div id="image_container"></div>
 		</div>
 		
 		<div class="button">
