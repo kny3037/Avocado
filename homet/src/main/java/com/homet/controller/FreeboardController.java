@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.homet.model.Freeboard;
 import com.homet.model.Likes;
 import com.homet.model.User;
-import com.homet.model.Fpagdto;
+import com.homet.model.FPageDto;
 import com.homet.service.FreeBoardService;
 import com.homet.service.LikesService;
 
@@ -55,16 +55,16 @@ public class FreeboardController {
 		if(page==null || page.trim().length()==0) currentPage = 1;
 		else currentPage = Integer.parseInt(page);
 		
-		Fpagdto pageDto;
+		FPageDto FpageDto;
 		
 		String findText = (String) param.get("findText");
 		String field=(String) param.get("field");
 		
 		totalCount=service.searchCount(param);  
-		pageDto=new Fpagdto(currentPage, pageSize, totalCount, field, findText);
-		list=service.searchList(pageDto); 
+		FpageDto=new FPageDto(currentPage, pageSize, totalCount, field, findText);
+		list=service.searchList(FpageDto); 
 		Map<String,Object> map = new HashMap<String,Object>();    
-		map.put("page", pageDto);		
+		map.put("page", FpageDto);		
 		map.put("list",list);	
 		model.addAllAttributes(map);	
 	
