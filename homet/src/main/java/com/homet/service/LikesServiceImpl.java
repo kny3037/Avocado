@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.homet.dao.LikesMapper;
 import com.homet.model.Likes;
-import com.homet.model.Fpagdto;
+import com.homet.model.FPageDto;
 
 @Service
 public class LikesServiceImpl implements LikesService{
@@ -21,7 +21,7 @@ public class LikesServiceImpl implements LikesService{
 	}
 
 	@Override
-	public List<Likes> getList(Fpagdto dto) {
+	public List<Likes> getList(FPageDto dto) {
 		// TODO Auto-generated method stub
 		return dao.getList(dto);
 	}
