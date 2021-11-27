@@ -72,47 +72,49 @@
       
         <div id="all">
         
-         	<div class="container" style="float: right;">
+         	<div class="container">
 			
-			<th:block th:if="${count==0}">
-				<a type="button" class="button" id="like"><img src="resources/img/like_emt.png" ></a>			
-			</th:block>
-			<th:block th:if="${count==1}">
-				<a type="button" class="button2" id="like2"><img src="resources/img/like_full.png" ></a>
-			</th:block>
-			</div>
-        
-        	
+				<th:block th:if="${count==0}">
+					<a type="button" class="button" id="like"><img src="resources/img/heart_r.png" align="right"></a>			
+				</th:block>
+				<th:block th:if="${count==1}">
+					<a type="button" class="button2" id="like2"><img src="resources/img/heart.png" align="right"></a>
+				</th:block>
+			
         
         	<ul>
-        	<li><input class="fidx" type="hidden" name="fidx" th:value="${detail.fidx}"></li>
+	        	<li><input class="fidx" type="hidden" name="fidx" th:value="${detail.fidx}"></li>
+	        	
+	        	<li><h2 class="subject">[[${detail.subject}]]</h2></li>
+	        			
+	        	<li class="nickname" ><h5>작성자 : [[${detail.nickname}]]</h5></li>
+	        	
+	        	<li class="like_cnt">좋아요 [[${detail.like_cnt}]]</li>
+	        	      	
+	        	<li><img th:src="@{/img/}+${detail.fimage}" alt="image" class="fimage"></li>
+	        	
+	        	<li><pre class="content">[[${detail.content}]]</pre></li>        	
+	        	
+	        	<li class="tag_date">태그 &nbsp; [[${detail.hashtag}]] &nbsp;&nbsp;  작성날짜 : <span th:text="${#calendars.format(detail.reg_date,'yyyy-MM-dd')}"></span></li>
+	        	<!-- &nbsp : 공백 --> 
+        
         	
-        	<li><h2>[[${detail.subject}]]</h2></li>
-        	<li>[[${detail.like_cnt}]]</li>
-        	
-        	<li><input class="nickname" type=text name="nickname" th:value="${detail.nickname}" readonly></li>
-        	      	
-        	<li><pre>[[${detail.content}]]</pre></li>
-        	
-        	<li><img th:src="@{/img/}+${detail.fimage}" alt="image"></li>
-        
-        	<li>태그 &nbsp [[${detail.hashtag}]]</li>   <!-- &nbsp : 공백 --> 
-        
-        	<li> 작성날짜 : <span th:text="${#calendars.format(detail.reg_date,'yyyy-MM-dd')}"></span></li>
-        </ul>
+        	</ul>
+        </div>
         
         
-        
-        <th:if test="${}">  <!-- 글 작성자만 수정삭제 보이도록 -->  
-			<a th:href="@{/update?(fidx=${detail.fidx},page=${page})}"><button type="button">수정</button></a>
-			<a th:href="@{/boarddelete?(fidx=${detail.fidx},page=${page})}"><button type="button">삭제</button></a>
-		</th:if>
+	    <div class="detailbtn">     
+	           <th:block th:if="${session.user != null}">  <!-- 글 작성자만 수정삭제 보이도록 -->
+	              <th:block th:if="${session.user.name == 'admin' || session.user.nickname == detail.nickname}">
+	               <a  th:href="@{/update?(fidx=${detail.fidx},page=${page})}">수정</a>
+	               <a  th:href="@{/boarddelete?(fidx=${detail.fidx},page=${page})}">삭제</a>
+	            </th:block>
+	         </th:block>
+	         <a href="/list">목록</a>
+	      </div>
 		
-		<a href="/list"><button type="button">목록</button></a>
       
-</div>
-
-
-      
+	</div>
+    
 </body>
 </html>
