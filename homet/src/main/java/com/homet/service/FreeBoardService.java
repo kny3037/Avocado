@@ -3,8 +3,8 @@ package com.homet.service;
 import java.util.List;
 import java.util.Map;
 
-import com.homet.model.Freeboard;
 import com.homet.model.FPageDto;
+import com.homet.model.Freeboard;
 
 public interface FreeBoardService {
 
@@ -16,8 +16,8 @@ public interface FreeBoardService {
 	List<Freeboard>getAll();  
 	List<Freeboard> getPagelist(FPageDto dto);
 	int searchCount(Map<String,Object> map);
-	List<Freeboard> searchList(FPageDto dto);
+	List<Freeboard> searchList(FPageDto pageDto);
 	int like_cnt(int fidx);
-
+	List<Freeboard>notice();
 	
 }

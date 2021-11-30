@@ -3,12 +3,14 @@ package com.homet.service;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.homet.dao.FreeboardMapper;
-import com.homet.model.Freeboard;
 import com.homet.model.FPageDto;
+import com.homet.model.Freeboard;
 
 @Service
 public class FreeBoardServiceImpl implements FreeBoardService {
@@ -45,8 +47,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return dao.getCount();
 	}
 
+
 	@Override
-	public List<Freeboard> getAll() {	
+	public List<Freeboard> getAll() {
 		return dao.getAll();
 	}
 	
@@ -64,12 +67,21 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	public List<Freeboard> searchList(FPageDto dto) {
 		return dao.searchList(dto);
 	}
+	
 
 	@Override
 	public int like_cnt(int fidx) {
 		// TODO Auto-generated method stub
 		return dao.like_cnt(fidx);
 	}
+
+	@Override
+	public List<Freeboard> notice() {
+		return dao.notice();
+	}
+	
+	
+	
 	
 
 }
